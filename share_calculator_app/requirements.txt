@@ -1,4 +1,4 @@
-alpaca==1.0.0
+alpaca-py==1.0.0
 blk_utils==0.1.2
 pandas==2.1.3
 python-dotenv==1.0.0
