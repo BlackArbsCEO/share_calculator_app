@@ -7,15 +7,17 @@ from blk_utils import quantize_number
 from stqdm import stqdm
 
 
-def get_stock_price_yahoo(ticker: str):
+def get_stock_price_yahoo(ticker: str) -> float:
     end_date = pd.to_datetime("today")
-    start_date = end_date - pd.Timedelta(days=2)
-    prices = yf.Ticker(ticker).history(start=start_date, end=end_date)
-    closes = prices.loc[:, "Close"].rename(columns=str.lower)
+    start_date = end_date - pd.Timedelta(
+        days=5
+    )  # avoid issues with holidays/long weekends
+    price_series = yf.Ticker(ticker).history(start=start_date, end=end_date)
+    closes = price_series.loc[:, "Close"]
 
     # get price from dataframe
 
-    price = quantize_number(closes["close"].iloc[-1])
+    price = quantize_number(closes.iloc[-1])
     return price
 
 
